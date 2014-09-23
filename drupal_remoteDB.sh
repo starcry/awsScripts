@@ -9,7 +9,8 @@ chkconfig mysqld on
 service httpd start
 service mysqld start 
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.old
-vim /etc/httpd/conf/httpd.conf
+#vim /etc/httpd/conf/httpd.conf
+ sed 's_<Directory \"/var/www/html\">\(.*\)</Directory>_\1_' temp2 | sed -i 's_AllowOverride None_AllowOverride All_g' /etc/httpd/conf/httpd.conf
 service httpd restart 
 echo "enter database DNS"
 read DNS
