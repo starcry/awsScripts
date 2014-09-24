@@ -63,9 +63,18 @@ echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 read
 
 cd /var/www/html/
-for i in awssdk bootstrap sharethis jquery_update 
-do
-    drush dl $i
-    drush en $i
-done
+drush dl awssdk
+drush en awssdk
+drush dl bootstrap
+drush en bootstrap
+drush dl sharethis
+drush en sharethis
+drush dl jquery_update
+drush en jquery_update
 "
+#for i in awssdk bootstrap sharethis jquery_update 
+#do
+#    drush dl $i
+#    drush en $i
+#done
+#"
