@@ -17,6 +17,11 @@ STABLE RELEASE
     ebs.sh
         This builds a filesystem for volume and mounts it
         should be run as root
+        lines below need to be fixed and then will be ready for stable release
+         52 chmod 777 sites/default/files/
+         53 cp sites/default/default.settings.php sites/default/settings.php
+         54 chmod 777 sites/default/settings.php 
+
 
     dev.vim
         pretty dev colours for vim that I prefer
