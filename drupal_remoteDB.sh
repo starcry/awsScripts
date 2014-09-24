@@ -57,11 +57,12 @@ chmod 777 sites/default/files/
 cp sites/default/default.settings.php sites/default/settings.php
 chmod 777 sites/default/settings.php 
 
-echo ***************************************
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo go to servers domain and install drupal
-echo ***************************************
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 read
 
+cd /var/www/html/
 for i in awssdk bootstrap sharethis jquery_update 
 do
     drush dl $i
