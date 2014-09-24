@@ -9,41 +9,53 @@ chkconfig mysqld on
 service httpd start
 service mysqld start 
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.old
-#vim /etc/httpd/conf/httpd.conf
- sed 's_<Directory \"/var/www/html\">\(.*\)</Directory>_\1_' temp2 | sed -i 's_AllowOverride None_AllowOverride All_g' /etc/httpd/conf/httpd.conf
+sed 's_<Directory \"/var/www/html\">\(.*\)</Directory>_\1_' temp2 | sed -i 's_AllowOverride None_AllowOverride All_g' /etc/httpd/conf/httpd.conf
 service httpd restart 
-echo "enter database DNS"
-read DNS
-echo "enter database username"
-read username
+
+echo "you are now going to configure your AWS tools, please have your access keys and secret access keys to had. It is recomended that this be an IAM access key, this will make your life easier in the event of a compromise.
+
+press any key to continue"
+read
+
+aws configure
+
+echo "please enter the database name you wish to use"
+aws rds describe-db-instances | egrep "DBName|Address|MasterUsername" | sed 's/"//g'
+read DBName
+
+DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
+username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
+
 echo "enter database password"
 read -s -p "enter database password: " dbpw
 
-#mysqladmin -u $username password  
-#############mysql##########
-##mysql -h drupal.ch3ptkr52ioy.eu-west-1.rds.amazonaws.com -P 3306 -u root -p$pass << EOF
 mysql -h $DNS -P 3306 -u $username -p$dbpw << EOF
 DROP DATABASE test; 
 DELETE FROM mysql.user WHERE user = ''; 
 FLUSH PRIVILEGES; 
 EOF
 
+pear update-channels
 pear upgrade
 pear channel-discover pear.drush.org
 pear install drush/drush 
 
 bash ebs.sh
-
+echo "place 1"
 chown ec2-user /var/www/html/
 
+echo "place 2"
 su ec2-user
 cd /var/www/html/
+echo "place 3"
 drush dl
 mv drupal-7.*/* ./
 mv drupal-7.*/.* ./
+echo "place 4"
 
 mkdir sites/default/files
 chmod 777 sites/default/files/
+echo "place 5"
 cp sites/default/default.settings.php sites/default/settings.php
 chmod 777 sites/default/settings.php 
 

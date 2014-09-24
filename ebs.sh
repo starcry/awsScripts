@@ -18,6 +18,6 @@ mount /dev/$BLOCK $MOUNT
 
 cp /etc/fstab /etc/fstab.orig
 
-fstabEntry="/dev/$BLOCK $MOUNT ext4 defaults 0 2"
+fstabEntry="/dev/$BLOCK $MOUNT ext4 defaults,noatime 0 2"
 echo $fstabEntry >> /etc/fstab
 mount -a
