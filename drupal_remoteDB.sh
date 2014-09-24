@@ -19,8 +19,8 @@ read
 
 aws configure
 
-echo "please enter the database name you wish to use"
 aws rds describe-db-instances | egrep "DBName|Address|MasterUsername" | sed 's/"//g'
+echo "please enter the database name you wish to use"
 read DBName
 
 DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
@@ -57,7 +57,9 @@ chmod 777 sites/default/files/
 cp sites/default/default.settings.php sites/default/settings.php
 chmod 777 sites/default/settings.php 
 
+echo ***************************************
 echo go to servers domain and install drupal
+echo ***************************************
 read
 
 for i in awssdk bootstrap sharethis jquery_update 
