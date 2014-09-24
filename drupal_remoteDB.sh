@@ -41,10 +41,8 @@ pear channel-discover pear.drush.org
 pear install drush/drush 
 
 bash ebs.sh
-echo "place 1"
 chown ec2-user /var/www/html/
 
-echo "place 2"
 cd /var/www/html/
 drush dl
 chown -R ec2-user:ec2-user drupal-7*/
