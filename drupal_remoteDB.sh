@@ -3,7 +3,7 @@
 yum update -y
 yum upgrade -y
 
-yum -y install httpd mysql mysql-server php php-cli php-gd php-intl php-mbstring php-mysql php-pdo php-pear php-xml php-xmlrpc 
+yum -y install httpd mysql php php-cli php-gd php-intl php-mbstring php-mysql php-pdo php-pear php-xml php-xmlrpc 
 chkconfig httpd on
 chkconfig mysqld on
 service httpd start
@@ -12,7 +12,7 @@ cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.old
 sed 's_<Directory \"/var/www/html\">\(.*\)</Directory>_\1_' temp2 | sed -i 's_AllowOverride None_AllowOverride All_g' /etc/httpd/conf/httpd.conf
 service httpd restart 
 
-echo "you are now going to configure your AWS tools, please have your access keys and secret access keys to had. It is recomended that this be an IAM access key, this will make your life easier in the event of a compromise.
+echo "you are now going to configure your AWS tools, please have your access keys and secret access keys to hand. It is reccomended that this be an IAM access key, this will make your life easier in the event of a compromise.
 
 press any key to continue"
 read
@@ -26,11 +26,9 @@ read DBName
 DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
 username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
 
-echo "enter database password"
 read -s -p "enter database password: " dbpw
 
 mysql -h $DNS -P 3306 -u $username -p$dbpw << EOF
-DROP DATABASE test; 
 DELETE FROM mysql.user WHERE user = ''; 
 FLUSH PRIVILEGES; 
 EOF
