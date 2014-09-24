@@ -45,9 +45,10 @@ echo "place 1"
 chown ec2-user /var/www/html/
 
 echo "place 2"
-su ec2-user -c "
 cd /var/www/html/
 drush dl
+chown -R ec2-user:ec2-user drupal-7*/
+su ec2-user -c "
 mv drupal-7.*/* ./
 mv drupal-7.*/.* ./
 
