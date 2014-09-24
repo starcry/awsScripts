@@ -45,21 +45,18 @@ echo "place 1"
 chown ec2-user /var/www/html/
 
 echo "place 2"
-su ec2-user
+su ec2-user -c "
 cd /var/www/html/
-echo "place 3"
 drush dl
 mv drupal-7.*/* ./
 mv drupal-7.*/.* ./
-echo "place 4"
 
 mkdir sites/default/files
 chmod 777 sites/default/files/
-echo "place 5"
 cp sites/default/default.settings.php sites/default/settings.php
 chmod 777 sites/default/settings.php 
 
-echo "go to servers domain and install drupal"
+echo go to servers domain and install drupal
 read
 
 for i in awssdk bootstrap sharethis jquery_update 
@@ -67,3 +64,4 @@ do
     drush dl $i
     drush en $i
 done
+"
