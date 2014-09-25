@@ -1,5 +1,8 @@
 #!/bin/bash
 
+yum update -y
+yum upgrade -y
+
 yum groupinstall -y "Web Server" "PHP Support"
 yum install -y php-mysql mysql
 
