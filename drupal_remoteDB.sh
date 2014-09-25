@@ -41,7 +41,7 @@ pear channel-discover pear.drush.org
 pear install drush/drush 
 
 lsblk
-read -s "above are your volumes, do you need to setup/mount any? (y/n) " volmount
+read -p "above are your volumes, do you need to setup/mount any? (y/n) " volmount
 
 if [ $volmount = "y" ]
 then
