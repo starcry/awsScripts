@@ -7,7 +7,6 @@ yum groupinstall -y "Web Server" "PHP Support"
 yum install -y php-mysql mysql
 
 service httpd start
-service mysqld start
 
 groupadd www
 usermod -a -G www ec2-user
@@ -43,7 +42,7 @@ EOF
 su ec2-user -c "
 wget -P /var/www/html/ https://wordpress.org/latest.tar.gz
 
-tar -xzf /var/www/html/latest.tar.gz
+tar -xzf /var/www/html/latest.tar.gz -C /var/www/html
 mv /var/www/html/wordpress/* /var/www/html/
 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
@@ -59,4 +58,3 @@ done
 
 service httpd restart
 chkconfig httpd on
-chkconfig mysqld on
