@@ -7,8 +7,14 @@ lsblk
 echo "enter block device: "
 read BLOCK
 
-file -s /dev/$BLOCK
-mkfs -t ext4 /dev/$BLOCK
+echo "do you need to build a file system for the volume?"
+read -s "please note this will wipe all data on the volume (y/n) " fileBuild
+
+if [ $fileBuild = "y" ]
+then
+    file -s /dev/$BLOCK
+    mkfs -t ext4 /dev/$BLOCK
+fi
 
 echo "enter location to mount directory"
 read MOUNT

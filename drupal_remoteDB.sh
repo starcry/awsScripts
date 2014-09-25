@@ -29,6 +29,8 @@ username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egre
 read -s -p "enter database password: " dbpw
 
 mysql -h $DNS -P 3306 -u $username -p$dbpw << EOF
+DROP DATABASE $DBName;
+CREATE DATABASE $DBName;
 DELETE FROM mysql.user WHERE user = ''; 
 FLUSH PRIVILEGES; 
 EOF
@@ -38,7 +40,14 @@ pear upgrade
 pear channel-discover pear.drush.org
 pear install drush/drush 
 
-bash ebs.sh
+lsblk
+read -s "above are your volumes, do you need to setup/mount any? (y/n) " volmount
+
+if [ $volmount = "y" ]
+then
+    bash ebs.sh
+fi
+
 chown ec2-user /var/www/html/
 
 cd /var/www/html/
