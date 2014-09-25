@@ -47,7 +47,7 @@ then
     bash ebs.sh
 fi
 
-chown -R root:www /var/www
+chown -R ec2-user:www /var/www
 
 su ec2-user -c "
 wget -P /var/www/html/ https://wordpress.org/latest.tar.gz
