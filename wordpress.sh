@@ -39,6 +39,16 @@ DELETE FROM mysql.user WHERE user = '';
 FLUSH PRIVILEGES; 
 EOF
 
+lsblk
+read -p "above are your volumes, do you need to setup/mount any? (y/n) " volmount
+
+if [ $volmount = "y" ]
+then
+    bash ebs.sh
+fi
+
+chown -R root:www /var/www
+
 su ec2-user -c "
 wget -P /var/www/html/ https://wordpress.org/latest.tar.gz
 
