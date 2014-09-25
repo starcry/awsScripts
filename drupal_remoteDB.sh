@@ -61,4 +61,7 @@ read
 cd /var/www/html/
 drush dl awssdk bootstrap sharethis jquery_update
 drush en -y awssdk bootstrap sharethis jquery_update
+
+chmod 444 sites/default/settings.php
+chmod -R 444 sites/default/files/
 "
