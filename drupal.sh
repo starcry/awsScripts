@@ -20,8 +20,16 @@ read
 aws configure
 
 aws rds describe-db-instances | egrep "DBName|Address|MasterUsername" | sed 's/"//g'
-echo "please enter the database name you wish to use"
+echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
 read DBName
+echo "thank you, you have selected the " $DBName " would you like to use a different database? (t/n)"
+read diffName
+
+if [ $diffName = "y" ]
+then
+    echo "please enter the name of the database you would like to create:"
+    read DBName
+fi
 
 DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
 username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
@@ -58,6 +66,8 @@ chmod 777 sites/default/settings.php
 
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo go to servers domain and install drupal
+echo please note that at this time this
+echo only works with MYSql.
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 read
 
