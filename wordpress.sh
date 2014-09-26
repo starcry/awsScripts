@@ -64,8 +64,14 @@ for ((i=1; i<=$randCount; i++))
 do 
     #temp=$(</dev/urandom tr -dc '1234567890!@#$%^*()-=_+qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM[]{};:@#~,.?><' | head -c65; echo "")
     temp=$(</dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM' | head -c65; echo "")
-    sed -i 's/put your unique phrase here/'"$temp"'/' /var/www/html/wp-config.php
+    #sed -i 's/put your unique phrase here/'"$temp"'/' /var/www/html/wp-config.php
+    sed -i '0,/put your unique phrase here/{s/put your unique phrase here/'"$temp"'/}' /var/www/html/wp-config.php
 done
+
+sed -i 's/database_name_here/'"$DBName"'/' /var/www/html/wp-config.php
+sed -i 's/username_here/'"$username"'/' /var/www/html/wp-config.php
+sed -i 's/password_here/'"$dbpw"'/' /var/www/html/wp-config.php
+sed -i 's/localhost/'"$DNS"'/' /var/www/html/wp-config.php
 
 service httpd restart
 chkconfig httpd on
