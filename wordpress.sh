@@ -50,7 +50,7 @@ fi
 chown -R ec2-user:www /var/www
 
 su ec2-user -c "
-wget -P /var/www/html/ https://wordpress.org/latest.tar.gz
+wget -P /var/www/html/ http://wordpress.org/latest.tar.gz
 
 tar -xzf /var/www/html/latest.tar.gz -C /var/www/html
 mv /var/www/html/wordpress/* /var/www/html/
