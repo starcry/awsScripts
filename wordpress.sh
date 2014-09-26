@@ -57,7 +57,7 @@ mv /var/www/html/wordpress/* /var/www/html/
 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
-randCount=\$(randCount=\$(grep -c \"put your unique phrase here\" /var/www/html/wp-config.php)
+randCount=\$(grep -c \"put your unique phrase here\" /var/www/html/wp-config.php)
 
 for ((i=1; i<=\$randCount; i++))
 do 
