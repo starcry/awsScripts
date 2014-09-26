@@ -58,12 +58,12 @@ mv /var/www/html/wordpress/* /var/www/html/
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 "
 
-randCount=\$(grep -c \"put your unique phrase here\" /var/www/html/wp-config.php)
+randCount=$(grep -c "put your unique phrase here" /var/www/html/wp-config.php)
 
 for ((i=1; i<=$randCount; i++))
 do 
-    temp=</dev/urandom tr -dc '1234567890!@#$%^*()-=_+qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM[]{};:@#~,.?><' | head -c65; echo ""
-    sed -i '0,/put your unique phrase here/s//$temp/' /var/www/html/wp-config.php
+    temp=$(</dev/urandom tr -dc '1234567890!@#$%^*()-=_+qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM[]{};:@#~,.?><' | head -c65; echo "")
+    sed -i 's/put your unique phrase here/'"$temp"'/' /var/www/html/wp-config.php
 done
 
 service httpd restart
