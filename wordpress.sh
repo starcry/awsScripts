@@ -39,13 +39,7 @@ DELETE FROM mysql.user WHERE user = '';
 FLUSH PRIVILEGES; 
 EOF
 
-lsblk
-read -p "above are your volumes, do you need to setup/mount any? (y/n) " volmount
-
-if [ $volmount = "y" ]
-then
-    bash ebs.sh
-fi
+bash ebs.sh
 
 chown -R ec2-user:www /var/www
 
@@ -62,9 +56,7 @@ randCount=$(grep -c "put your unique phrase here" /var/www/html/wp-config.php)
 
 for ((i=1; i<=$randCount; i++))
 do 
-    #temp=$(</dev/urandom tr -dc '1234567890!@#$%^*()-=_+qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM[]{};:@#~,.?><' | head -c65; echo "")
     temp=$(</dev/urandom tr -dc '1234567890qwertyuiopQWERTYUIOPasdfghjklASDFGHJKLzxcvbnmZXCVBNM' | head -c65; echo "")
-    #sed -i 's/put your unique phrase here/'"$temp"'/' /var/www/html/wp-config.php
     sed -i '0,/put your unique phrase here/{s/put your unique phrase here/'"$temp"'/}' /var/www/html/wp-config.php
 done
 
@@ -75,3 +67,5 @@ sed -i 's/localhost/'"$DNS"'/' /var/www/html/wp-config.php
 
 service httpd restart
 chkconfig httpd on
+
+echo "wordpress has now been installed, you will need to go to the servers domain through the web interface to compleate the installation. As a final word the web plugin installation can be a little wonky if you figgure it out let me know, otherwise just download and extract to the plugin directory"

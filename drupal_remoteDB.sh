@@ -40,13 +40,7 @@ pear upgrade
 pear channel-discover pear.drush.org
 pear install drush/drush 
 
-lsblk
-read -p "above are your volumes, do you need to setup/mount any? (y/n) " volmount
-
-if [ $volmount = "y" ]
-then
-    bash ebs.sh
-fi
+bash ebs.sh
 
 chown ec2-user /var/www/html/
 
