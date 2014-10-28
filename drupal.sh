@@ -59,10 +59,10 @@ su ec2-user -c "
 mv drupal-7.*/* ./
 mv drupal-7.*/.* ./
 
-mkdir sites/default/files
-chmod 777 sites/default/files/
-cp sites/default/default.settings.php sites/default/settings.php
-chmod 777 sites/default/settings.php 
+mkdir /var/www/html/sites/default/files
+chmod 764 /var/www/html/sites/default/files
+cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php
+chmod 444 /var/www/html/sites/default/settings.php
 
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo go to servers domain and install drupal
@@ -75,6 +75,3 @@ cd /var/www/html/
 drush dl awssdk bootstrap sharethis jquery_update
 drush en -y awssdk bootstrap sharethis jquery_update
 "
-
-chmod 444 sites/default/settings.php
-chmod -R 444 sites/default/files/
