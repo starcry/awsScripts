@@ -21,7 +21,7 @@ find /var/www -type f -exec sudo chmod 0664 {} +
 
 echo "you are now going to configure your AWS tools, please have your access keys and secret access keys to hand. It is reccomended that this be an IAM access key, this will make your life easier in the event of a compromise.
 
-press any key to continue"
+press the enter key to continue"
 read
 
 aws configure
@@ -53,7 +53,7 @@ EOF
 echo "this is a standard error check"
 echo "we have just connected to the database,"
 echo "dropped and recreated the database you mentioned"
-echo "if you don't see any errors then press any key to continue"
+echo "if you don't see any errors then press the enter key to continue"
 read -p "otherwise exit this script and troubleshoot"
 
 bash ebs.sh
@@ -77,21 +77,11 @@ do
     sed -i '0,/put your unique phrase here/{s/put your unique phrase here/'"$temp"'/}' /var/www/html/wp-config.php
 done
 
-grep database_name_here /var/www/html/wp-config.php
 sed -i 's/database_name_here/'"$DBName"'/' /var/www/html/wp-config.php
-grep $DBName /var/www/html/wp-config.php
-echo "*************break*******************"
-grep username_here /var/www/html/wp-config.php
 sed -i 's/username_here/'"$username"'/' /var/www/html/wp-config.php
-grep  $username /var/www/html/wp-config.php
-echo "*************break*******************"
-grep password_here /var/www/html/wp-config.php
+read -p "please re-enter the password you used to connect to this database, this will be stored in your wp-config.php file" dbpw
 sed -i 's/password_here/'"$dbpw"'/' /var/www/html/wp-config.php
-grep $dbpw /var/www/html/wp-config.php
-echo "*************break*******************"
-grep localhost /var/www/html/wp-config.php
 sed -i 's/localhost/'"$DNS"'/' /var/www/html/wp-config.php
-grep $DNS /var/www/html/wp-config.php
 
 service httpd restart
 chkconfig httpd on
