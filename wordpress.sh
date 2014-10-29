@@ -26,26 +26,25 @@ read
 
 aws configure
 
-aws rds describe-db-instances | egrep "DBName|Address|MasterUsername" | sed 's/"//g'
+aws rds describe-db-instances | egrep "DBInstanceIdentifier|Address|MasterUsername" | sed 's/"//g'
 echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
 read DBName
-echo "thank you, you have selected the " $DBName " would you like to use a different database? (y/n)"
-read diffName
+#echo "thank you, you have selected the " $DBName " would you like to use a different database? (y/n)"
+#read diffName
+read -p "please enter the name of the database you wish to use: " tableName
 
-if [ $diffName = "y" ]
-then
-    echo "please enter the name of the database you would like to create:"
-    read DBName
-fi
+#if [ $diffName = "y" ]
+#then
+#    echo "please enter the name of the database you would like to create:"
+#    read DBName
+#fi
 
 DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
 username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
 
-read -s -p "enter database password: " dbpw
-
 mysql -h $DNS -P 3306 -u $username -p << EOF
-DROP DATABASE $DBName;
-CREATE DATABASE $DBName;
+DROP DATABASE $tableName;
+CREATE DATABASE $tableName;
 DELETE FROM mysql.user WHERE user = ''; 
 FLUSH PRIVILEGES; 
 SHOW DATABASES;
