@@ -22,7 +22,7 @@ aws configure
 aws rds describe-db-instances | egrep "DBName|Address|MasterUsername" | sed 's/"//g'
 echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
 read DBName
-echo "thank you, you have selected the " $DBName " would you like to use a different database? (t/n)"
+echo "thank you, you have selected the " $DBName " would you like to use a different database? (y/n)"
 read diffName
 
 if [ $diffName = "y" ]
@@ -34,14 +34,18 @@ fi
 DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
 username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
 
-read -s -p "enter database password: " dbpw
-
-mysql -h $DNS -P 3306 -u $username -p$dbpw << EOF
+mysql -h $DNS -P 3306 -u $username -p << EOF
 DROP DATABASE $DBName;
 CREATE DATABASE $DBName;
 DELETE FROM mysql.user WHERE user = ''; 
 FLUSH PRIVILEGES; 
 EOF
+
+echo "this is a standard error check"
+echo "we have just connected to the database,"
+echo "dropped and recreated the database you mentioned"
+echo "if you don't see any errors then press any key to continue"
+read -p "otherwise exit this script and troubleshoot"
 
 pear update-channels
 pear upgrade
@@ -60,9 +64,9 @@ mv drupal-7.*/* ./
 mv drupal-7.*/.* ./
 
 mkdir /var/www/html/sites/default/files
-chmod 764 /var/www/html/sites/default/files
+chmod 666 /var/www/html/sites/default/files
 cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php
-chmod 444 /var/www/html/sites/default/settings.php
+chmod 666 /var/www/html/sites/default/settings.php
 
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo go to servers domain and install drupal
@@ -70,6 +74,8 @@ echo please note that at this time this
 echo only works with MYSql.
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 read
+
+chmod 444 /var/www/html/sites/default/settings.php
 
 cd /var/www/html/
 drush dl awssdk bootstrap sharethis jquery_update
