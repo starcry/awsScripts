@@ -78,10 +78,21 @@ do
     sed -i '0,/put your unique phrase here/{s/put your unique phrase here/'"$temp"'/}' /var/www/html/wp-config.php
 done
 
+grep database_name_here /var/www/html/wp-config.php
 sed -i 's/database_name_here/'"$DBName"'/' /var/www/html/wp-config.php
+grep $DBName /var/www/html/wp-config.php
+echo "*************break*******************"
+grep username_here /var/www/html/wp-config.php
 sed -i 's/username_here/'"$username"'/' /var/www/html/wp-config.php
+grep  $username /var/www/html/wp-config.php
+echo "*************break*******************"
+grep password_here /var/www/html/wp-config.php
 sed -i 's/password_here/'"$dbpw"'/' /var/www/html/wp-config.php
+grep $dbpw /var/www/html/wp-config.php
+echo "*************break*******************"
+grep localhost /var/www/html/wp-config.php
 sed -i 's/localhost/'"$DNS"'/' /var/www/html/wp-config.php
+grep $DNS /var/www/html/wp-config.php
 
 service httpd restart
 chkconfig httpd on
