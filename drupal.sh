@@ -23,25 +23,13 @@ aws rds describe-db-instances | egrep "DBInstanceIdentifier|Address|MasterUserna
 echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
 read DBName
 
+DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
+username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
 mysql -f -h $DNS -P 3306 -u $username -p << EOF
 SHOW DATABASES;
 EOF
 
 read -p "please enter the name of the database you wish to create: " tableName
-#echo "thank you, you have selected the " $DBName " would you like to use a different database? (y/n)"
-#read diffName
-
-#if [ $diffName = "y" ]
-#then
-#    echo "please enter the name of the database you would like to create:"
-#    read DBName
-#fi
-
-echo "DBName is $DBName"
-DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
-echo "DNS is $DNS"
-username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
-echo "username is $username"
 
 mysql -f -h $DNS -P 3306 -u $username -p << EOF
 DROP DATABASE $tableName;
