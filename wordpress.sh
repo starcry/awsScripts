@@ -31,6 +31,10 @@ echo "above you see the various databases in the default region, please select w
 read DBName
 #echo "thank you, you have selected the " $DBName " would you like to use a different database? (y/n)"
 #read diffName
+mysql -f -h $DNS -P 3306 -u $username -p << EOF
+SHOW DATABASES;
+EOF
+
 read -p "please enter the name of the database you wish to create: " tableName
 
 #if [ $diffName = "y" ]
@@ -42,12 +46,11 @@ read -p "please enter the name of the database you wish to create: " tableName
 DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
 username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
 
-mysql -h $DNS -P 3306 -u $username -p << EOF
+mysql -f -h $DNS -P 3306 -u $username -p << EOF
 DROP DATABASE $tableName;
 CREATE DATABASE $tableName;
 DELETE FROM mysql.user WHERE user = ''; 
 FLUSH PRIVILEGES; 
-SHOW DATABASES;
 EOF
 
 echo "this is a standard error check"
