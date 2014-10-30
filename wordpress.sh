@@ -79,7 +79,7 @@ done
 
 sed -i 's/database_name_here/'"$DBName"'/' /var/www/html/wp-config.php
 sed -i 's/username_here/'"$username"'/' /var/www/html/wp-config.php
-read -p "please re-enter the password you used to connect to this database, this will be stored in your wp-config.php file" dbpw
+read -s -p "please re-enter the password you used to connect to this database, this will be stored in your wp-config.php file: " dbpw
 sed -i 's/password_here/'"$dbpw"'/' /var/www/html/wp-config.php
 sed -i 's/localhost/'"$DNS"'/' /var/www/html/wp-config.php
 
