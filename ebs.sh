@@ -47,7 +47,7 @@ then
         if [[ $fileBuild = "y" ]]
         then
             echo $volumes | xargs -n1 -I {} sed -i '/.*'"{}"'.*/d' /etc/fstab
-            read -p "rebuilding file system, this will wipe all data on drive, press any key to contine (if you can't find the any key I suggest purchasing a mac)"
+            read -p "rebuilding file system, this will wipe all data on drive, press the enter key to contine (if you can't find the any key I suggest purchasing a mac)"
             mkfs -t ext4 /dev/$BLOCK
             fstabEntry="/dev/$BLOCK $MOUNT ext4 defaults,noatime 0 2"
             echo $fstabEntry >> /etc/fstab
