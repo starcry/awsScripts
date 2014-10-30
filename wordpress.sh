@@ -72,7 +72,7 @@ do
     sed -i '0,/put your unique phrase here/{s/put your unique phrase here/'"$temp"'/}' /var/www/html/wp-config.php
 done
 
-sed -i 's/database_name_here/'"$DBName"'/' /var/www/html/wp-config.php
+sed -i 's/database_name_here/'"$tableName"'/' /var/www/html/wp-config.php
 sed -i 's/username_here/'"$username"'/' /var/www/html/wp-config.php
 read -s -p "please re-enter the password you used to connect to this database, this will be stored in your wp-config.php file: " dbpw
 sed -i 's/password_here/'"$dbpw"'/' /var/www/html/wp-config.php
