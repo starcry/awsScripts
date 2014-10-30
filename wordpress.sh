@@ -31,7 +31,7 @@ echo "above you see the various databases in the default region, please select w
 read DBName
 #echo "thank you, you have selected the " $DBName " would you like to use a different database? (y/n)"
 #read diffName
-read -p "please enter the name of the database you wish to use: " tableName
+read -p "please enter the name of the database you wish to create: " tableName
 
 #if [ $diffName = "y" ]
 #then
