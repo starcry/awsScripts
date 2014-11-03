@@ -19,14 +19,14 @@ username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egre
 case "$choice" in
     1)
         echo "mysql"
-        mysql
+        mysqlSetup
         ;;
     *)
         echo "else"
         ;;
 esac
 
-function mysql() {
+function mysqlSetup() {
 
     mysql -f -h $DNS -P 3306 -u $username -p << EOF
     SHOW DATABASES;
