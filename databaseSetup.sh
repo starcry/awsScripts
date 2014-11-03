@@ -3,11 +3,11 @@
 DBName=$1
 
     echo "you are now going to configure your AWS tools, please have your access keys and secret access keys to hand. It is reccomended that this be an IAM access key, this will make your life easier in the event of a compromise.
-aws configure
+aws configure"
 
 echo "mysql (1)"
 read -p "please enter the number of the database you wish to use: " choice 
-press any key to continue"
+echo "press any key to continue"
 read
 aws rds describe-db-instances | egrep "DBInstanceIdentifier|Address|MasterUsername" | sed 's/"//g'
 echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
