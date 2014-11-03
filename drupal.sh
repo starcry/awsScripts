@@ -17,32 +17,7 @@ echo "you are now going to configure your AWS tools, please have your access key
 press any key to continue"
 read
 
-aws configure
-
-aws rds describe-db-instances | egrep "DBInstanceIdentifier|Address|MasterUsername" | sed 's/"//g'
-echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
-read DBName
-
-DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
-username=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "MasterUsername" | sed 's/.*|  //;s/ .*//')
-mysql -f -h $DNS -P 3306 -u $username -p << EOF
-SHOW DATABASES;
-EOF
-
-read -p "please enter the name of the database you wish to create: " tableName
-
-mysql -f -h $DNS -P 3306 -u $username -p << EOF
-DROP DATABASE $tableName;
-CREATE DATABASE $tableName;
-DELETE FROM mysql.user WHERE user = ''; 
-FLUSH PRIVILEGES; 
-EOF
-
-echo "this is a standard error check"
-echo "we have just connected to the database,"
-echo "dropped and recreated the database you mentioned"
-echo "if you don't see any errors then press any key to continue"
-read -p "otherwise exit this script and troubleshoot"
+bash databaseSetup.sh 
 
 pear update-channels
 pear upgrade
