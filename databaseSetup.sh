@@ -25,6 +25,8 @@ EOF
     read -p "otherwise exit this script and troubleshoot"
 }
 
+postgres() {echo "no actions required for postgres"}
+
 echo "you are now going to configure your AWS tools, please have your access keys and secret access keys to hand. It is reccomended that this be an IAM access key, this will make your life easier in the event of a compromise."
 
 aws configure
@@ -43,6 +45,9 @@ case "$choice" in
     1)
         mysqlSetup
         ;;
+
+    2)
+        postgres
     *)
         echo "else"
         ;;
