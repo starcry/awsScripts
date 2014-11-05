@@ -56,6 +56,7 @@ case "$choice" in
 
     2)
         postgres
+        ;;
     *)
         echo "else"
         ;;
