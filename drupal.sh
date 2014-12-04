@@ -36,7 +36,7 @@ mv drupal-7.*/* ./
 mv drupal-7.*/.* ./
 
 mkdir /var/www/html/sites/default/files
-chmod 666 /var/www/html/sites/default/files
+chmod 777 /var/www/html/sites/default/files
 cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php
 chmod 666 /var/www/html/sites/default/settings.php
 
