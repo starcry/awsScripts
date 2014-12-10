@@ -8,3 +8,5 @@ set shiftwidth=4
 set expandtab
 set background=dark
 colorscheme dev" >> /etc/vimrc
+
+yum groupinstall 'Development Tools'
