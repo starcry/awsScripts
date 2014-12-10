@@ -9,4 +9,4 @@ set expandtab
 set background=dark
 colorscheme dev" >> /etc/vimrc
 
-yum groupinstall 'Development Tools'
+yum groupinstall -y 'Development Tools'
