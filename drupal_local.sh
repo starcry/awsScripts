@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#THIS IS NOT SUITABLE FOR A PROD ENVIROMENT
+
 yum update -y
 yum upgrade -y
 
