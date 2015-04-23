@@ -12,9 +12,9 @@ cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.old
 sed 's_<Directory \"/var/www/html\">\(.*\)</Directory>_\1_' temp2 | sed -i 's_AllowOverride None_AllowOverride All_g' /etc/httpd/conf/httpd.conf
 service httpd restart 
 
-echo "you are now going to configure your database and possibly your AWS command line tools, depending on what you choose. Please have your access keys and secret access keys to hand. It is reccomended that this be an IAM access key, this will make your life easier in the event of a compromise.
+echo "you are now going to configure your database and possibly your AWS command line tools, depending on what you choose. Please have your access keys and secret access keys to hand. It is recomended that this be an IAM access key, this will make your life easier in the event of a compromise.
 
-press any key to continue"
+press the enter key to continue"
 read
 
 bash databaseSetup.sh 
