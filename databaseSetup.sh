@@ -36,7 +36,7 @@ choosedb() {
 
 
     aws rds describe-db-instances | egrep "DBInstanceIdentifier|Address|MasterUsername" | sed 's/"//g'
-    echo "above you see the various databases in the default region, please select which RDS database you would like to use accourding to the main database name. You will get a change to change this later if you like."
+    echo "above you see the various databases in the default region, please select which RDS database Identifier you would like to use according to the main database name. You will get a chance to change this later if you like."
     read DBName
 
     DNS=$(aws rds describe-db-instances --db-instance-identifier $DBName | egrep "Address" | sed 's/.*|  //;s/ .*//')
