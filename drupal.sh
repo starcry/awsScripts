@@ -1,6 +1,9 @@
 #!/bin/bash
 
 #doesn't work, drupal doesn't use pair, updating
+#require:
+#composer: http://codybonney.com/installing-composer-globally-on-centos-6-4/
+#drush: http://docs.drush.org/en/master/install-alternative/
 
 yum update -y
 yum upgrade -y
