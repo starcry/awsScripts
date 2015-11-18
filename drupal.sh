@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#doesn't work, drupal doesn't use pair, updating
+
 yum update -y
 yum upgrade -y
 
