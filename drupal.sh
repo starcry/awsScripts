@@ -12,9 +12,11 @@ yum upgrade -y
 
 yum -y install httpd mysql php55 php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc 
 chkconfig httpd on
+#not sure if this line is required
 chkconfig mysqld on
 service httpd start
 service mysqld start 
+#these next 2 lines might need to go
 cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.old
 sed 's_<Directory \"/var/www/html\">\(.*\)</Directory>_\1_' temp2 | sed -i 's_AllowOverride None_AllowOverride All_g' /etc/httpd/conf/httpd.conf
 service httpd restart 
