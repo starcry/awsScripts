@@ -4,6 +4,8 @@
 #require:
 #composer: http://codybonney.com/installing-composer-globally-on-centos-6-4/
 #drush: http://docs.drush.org/en/master/install-alternative/
+#with the recent updates to drupal, drush and the amazon AMI this script is out of date and no longer works.
+#currently rewriting
 
 yum update -y
 yum upgrade -y
