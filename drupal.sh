@@ -10,7 +10,7 @@
 yum update -y
 yum upgrade -y
 
-yum -y install httpd mysql php php-cli php-gd php-intl php-mbstring php-mysql php-pdo php-pear php-xml php-xmlrpc 
+yum -y install httpd mysql php php-cli php-gd php-intl php-mbstring php-mysqlnd php-pdo php-pear php-xml php-xmlrpc 
 chkconfig httpd on
 chkconfig mysqld on
 service httpd start
