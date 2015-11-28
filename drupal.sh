@@ -6,11 +6,22 @@
 #drush: http://docs.drush.org/en/master/install-alternative/
 #with the recent updates to drupal, drush and the amazon AMI this script is out of date and no longer works.
 #currently rewriting
+#currently everything is installing bar drush, that needs to be run separatly, I'm investigating why
+#drupal installation also has some issues, will sort this out later.
 
 yum update -y
 yum upgrade -y
 
-yum -y install httpd mysql php55 php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc 
+yum -y install php55
+read
+
+yum -y install mysql
+read
+
+yum -y install php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc 
+
+read
+
 chkconfig httpd on
 #not sure if this line is required
 chkconfig mysqld on
@@ -28,24 +39,26 @@ read
 
 bash databaseSetup.sh 
 
-pear update-channels
-pear upgrade
-pear channel-discover pear.drush.org
-pear install drush/drush 
-
 bash ebs.sh
 
 chown ec2-user /var/www/html/
 
 cd /var/www/html/
-drush dl
-chown -R ec2-user:ec2-user drupal-7*/
-su ec2-user -c "
-mv drupal-7.*/* ./
-mv drupal-7.*/.* ./
 
-mkdir /var/www/html/sites/default/files
-chmod 777 /var/www/html/sites/default/files
+wget http://files.drush.org/drush.phar -P /home/ec2-user/
+php /home/ec2-user/drush.phar core-status
+chmod +x /home/ec2-user/drush.phar
+mv /home/ec2-user/drush.phar /usr/local/bin/drush
+
+su ec2-user -c "
+
+drush init
+
+(cd /var/www/html; drush dl)
+chown -R ec2-user:ec2-user /var/www/html/drupal-8.*/
+
+mv /var/www/html/drupal-8.*/* /var/www/html/
+mv /var/www/html/drupal-8.*/.* /var/www/html/
 cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php
 chmod 666 /var/www/html/sites/default/settings.php
 
