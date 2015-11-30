@@ -1,16 +1,23 @@
 #!/bin/bash
 
-#doesn't work, drupal doesn't use pair, updating
+#this should all work now baring the su ec2-user statement
+
 #require:
 #composer: http://codybonney.com/installing-composer-globally-on-centos-6-4/
 #drush: http://docs.drush.org/en/master/install-alternative/
 #with the recent updates to drupal, drush and the amazon AMI this script is out of date and no longer works.
 #currently rewriting
-#currently everything is installing bar drush, that needs to be run separatly, I'm investigating why
-#drupal installation also has some issues, will sort this out later.
 
 yum update -y
 yum upgrade -y
+
+#repoquery --requires httpd mysql php55 php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc | sed 's/(.*//g' | uniq -u | xargs -n1 -I sudo yum install -y {}
+
+#repoquery --requires httpd mysql php55 php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc | sed 's/\..*//g; s/ .*//g; s/(.*//g; s_/.*__g' | uniq -u | xargs -n1 -I sudo yum install -y {}
+
+#read
+#yum -y install httpd
+#read
 
 yum -y install php55
 read
@@ -18,7 +25,7 @@ read
 yum -y install mysql
 read
 
-yum -y install php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc 
+yum -y install php55-cli php55-gd php55-intl php55-mbstring php55-mysqlnd php55-pdo php55-xml php55-xmlrpc php55-opcache
 
 read
 
@@ -55,6 +62,8 @@ su ec2-user -c "
 drush init
 
 (cd /var/www/html; drush dl)
+read
+
 chown -R ec2-user:ec2-user /var/www/html/drupal-8.*/
 
 mv /var/www/html/drupal-8.*/* /var/www/html/
