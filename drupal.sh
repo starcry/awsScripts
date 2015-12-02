@@ -1,12 +1,10 @@
 #!/bin/bash
 
-#this should all work now baring the su ec2-user statement
+# script works now, keeping links for later just in case.
 
 #require:
 #composer: http://codybonney.com/installing-composer-globally-on-centos-6-4/
 #drush: http://docs.drush.org/en/master/install-alternative/
-#with the recent updates to drupal, drush and the amazon AMI this script is out of date and no longer works.
-#currently rewriting
 
 yum update -y
 yum upgrade -y
@@ -59,9 +57,9 @@ mv /home/ec2-user/drush.phar /usr/local/bin/drush
 
 su ec2-user -c "
 
-drush init
+/usr/local/bin/drush init
 
-(cd /var/www/html; drush dl)
+(cd /var/www/html; /usr/local/bin/drush dl)
 read
 
 chown -R ec2-user:ec2-user /var/www/html/drupal-8.*/
@@ -70,6 +68,8 @@ mv /var/www/html/drupal-8.*/* /var/www/html/
 mv /var/www/html/drupal-8.*/.* /var/www/html/
 cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php
 chmod 666 /var/www/html/sites/default/settings.php
+mkdir /var/www/html/sites/default/files
+chown apache:ec2-user /var/www/html/sites/default/files
 
 echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 echo go to servers domain and install drupal
